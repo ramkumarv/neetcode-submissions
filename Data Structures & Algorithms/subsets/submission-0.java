@@ -1,0 +1,22 @@
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> results = new ArrayList<>();
+        int[] currSubSet = new int[0];
+        subsetR(nums, results, currSubSet, 0);
+        return results;
+    }
+
+    void subsetR(int[] nums, List<List<Integer>> results, int[] currSubSet, int curIndex) {
+        if(curIndex == nums.length) {
+            results.add(Arrays.stream(currSubSet)
+                           .boxed()
+                           .collect(Collectors.toList()));
+            return;
+        }
+
+        int[] included = Arrays.copyOf(currSubSet, currSubSet.length+1);
+        included[included.length - 1 ]= nums[curIndex];
+        subsetR(nums, results, included, curIndex + 1);
+        subsetR(nums, results, currSubSet, curIndex + 1);
+    }
+}
